@@ -45,47 +45,49 @@
         
         // none of the error messages were raised
         if (empty($username_err) && empty($password_err)) {
-            $sql = "SELECT password FROM users_table WHERE username = ?";
-            // "INSERT INTO users_table (username, password) VALUES (?, ?)";
+
+            $sql = "SELECT * FROM users_table WHERE username = ?";
+
             if ( $stmt = mysqli_prepare($link, $sql) ) {
                 mysqli_stmt_bind_param($stmt, "s", $param_username);
                 $param_username = $username;
-                // $param_password = password_hash($password, PASSWORD_DEFAULT); // hash password
-                if (mysqli_stmt_execute($stmt) ) {
+
+                if ( mysqli_stmt_execute($stmt) ) {
                     mysqli_stmt_store_result($stmt);
                 
-                    // Bind the result variable
+                    // Bind query results to local variables
                     mysqli_stmt_bind_result($stmt, $id, $db_username, $db_password);
 
-                    if (mysqli_stmt_num_rows($stmt)) {
+                    if (mysqli_stmt_num_rows($stmt) == 1) {
                         mysqli_stmt_fetch($stmt);
 
                         if(password_verify($password, $db_password)) {
-                            session_start();
+                            session_commit();
                             ini_set('session.use_strict_mode', 1);
+                            session_start();
 
                             $_SESSION["loggedin"] = true;
                             $_SESSION["id"] = $id;
                             $_SESSION["username"] = $username;
                             $_SESSION["display_username"] = $user;
 
-                            // Redirect user to welcome page.
+                            // Redirect user to page.
                             header("location: userView.php");
                         }
 
-                    else{
-                        // echo "Login unsuccessful";
-                        $password_err = "Password incorrect, please try again.";
+                        else {
+                            // echo "Login unsuccessful";
+                            $password_err = "Password incorrect, please try again.";
+                        }
                     }
-                } 
-                else{
+                }
+
+                else {
                     echo "Something went wrong. Please try again later.";
                 }
-            }
-            mysqli_stmt_close($stmt);
-            }
         }
-
+        mysqli_stmt_close($stmt);
+        }
     mysqli_close($link);
     }
 ?>
