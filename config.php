@@ -1,9 +1,14 @@
 <?php
 /* Database credentials */
-define('DB_SERVER', 'sql203.infinityfree.com');
-define('DB_USERNAME', 'if0_35198511');
-define('DB_PASSWORD', 'fBqgF0Ok3iL');
-define('DB_NAME', 'if0_35198511_my_db');
+// define('DB_SERVER', 'sql203.infinityfree.com');
+// define('DB_USERNAME', 'if0_35198511');
+// define('DB_PASSWORD', 'fBqgF0Ok3iL');
+// define('DB_NAME', 'if0_35198511_my_db');
+
+define('DB_SERVER', 'localhost');
+define('DB_USERNAME', 'root');
+define('DB_PASSWORD', '');
+define('DB_NAME', 'Backend333');
 
 /* Attempt to connect to MySQL database */
 $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
