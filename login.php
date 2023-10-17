@@ -55,13 +55,27 @@
                 mysqli_stmt_store_result($stmt);
             
                 // Bind the result variable
-                mysqli_stmt_bind_result($stmt, $db_password);
+                mysqli_stmt_bind_result($stmt, $id, $db_username, $db_password);
 
-                if (mysqli_stmt_fetch($stmt) && password_verify($password, $db_password)) {
-                    echo "Login successful";
+                if (mysqli_stmt_num_rows($stmt)) {
+                    mysqli_stmt_fetch($stmt);
+
+                    if(password_verify($password, $db_password)) {
+                        session_start();
+                        ini_set('session.use_strict_mode', 1);
+
+                        $_SESSION["loggedin"] = true;
+                        $_SESSION["id"] = $id;
+                        $_SESSION["username"] = $username;
+                        $_SESSION["display_username"] = $user;
+
+                        // Redirect user to welcome page.
+                        header("location: userView.php");
+                    }
                 }
+
                 else{
-                    echo "Login unsuccessful";
+                    // echo "Login unsuccessful";
                     $password_err = "Password incorrect, please try again.";
                 }
             } 
