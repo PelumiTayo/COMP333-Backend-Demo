@@ -59,6 +59,9 @@
 
                 if (mysqli_stmt_fetch($stmt) && password_verify($password, $db_password)) {
                     echo "Login successful";
+                    session_start();
+                    $_SESSION['username'] = $username;
+                    header("location: userView.php");
                 }
                 else{
                     echo "Login unsuccessful";
@@ -71,6 +74,7 @@
         }
         mysqli_stmt_close($stmt);
     }
+
     mysqli_close($link);
     }
 ?>
