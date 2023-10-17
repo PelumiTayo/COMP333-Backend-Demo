@@ -72,7 +72,6 @@
                         // Redirect user to welcome page.
                         header("location: userView.php");
                     }
-                }
 
                 else{
                     // echo "Login unsuccessful";
@@ -85,6 +84,7 @@
         }
         mysqli_stmt_close($stmt);
     }
+
     mysqli_close($link);
     }
 ?>
