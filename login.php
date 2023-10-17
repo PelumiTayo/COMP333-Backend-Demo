@@ -56,7 +56,7 @@
                     mysqli_stmt_store_result($stmt);
                 
                     // Bind query results to local variables
-                    mysqli_stmt_bind_result($stmt, $id, $db_username, $db_password);
+                    mysqli_stmt_bind_result($stmt, $db_username, $db_password);
 
                     if (mysqli_stmt_num_rows($stmt) == 1) {
                         mysqli_stmt_fetch($stmt);
