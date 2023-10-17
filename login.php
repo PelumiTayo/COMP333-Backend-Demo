@@ -13,7 +13,7 @@
 
         // validates username against alphanumeric values, length of 4 to 25, and checks if username is taken
         if(preg_match('/[\w]{4,25}/', $username)) {
-            $sql = "SELECT id FROM users_table WHERE username = ?";
+            $sql = "SELECT * FROM users_table WHERE username = ?";
             
             if($stmt = mysqli_prepare($link, $sql)) {
                 mysqli_stmt_bind_param($stmt, "s", $param_username);
@@ -56,7 +56,7 @@
                     mysqli_stmt_store_result($stmt);
                 
                     // Bind query results to local variables
-                    mysqli_stmt_bind_result($stmt, $id, $db_username, $db_password);
+                    mysqli_stmt_bind_result($stmt, $db_username, $db_password);
 
                     if (mysqli_stmt_num_rows($stmt) == 1) {
                         mysqli_stmt_fetch($stmt);
