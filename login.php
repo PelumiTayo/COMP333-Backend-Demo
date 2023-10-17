@@ -47,43 +47,44 @@
         if (empty($username_err) && empty($password_err)) {
             $sql = "SELECT password FROM users_table WHERE username = ?";
             // "INSERT INTO users_table (username, password) VALUES (?, ?)";
-        if ( $stmt = mysqli_prepare($link, $sql) ) {
-            mysqli_stmt_bind_param($stmt, "s", $param_username);
-            $param_username = $username;
-            // $param_password = password_hash($password, PASSWORD_DEFAULT); // hash password
-            if (mysqli_stmt_execute($stmt) ) {
-                mysqli_stmt_store_result($stmt);
-            
-                // Bind the result variable
-                mysqli_stmt_bind_result($stmt, $id, $db_username, $db_password);
+            if ( $stmt = mysqli_prepare($link, $sql) ) {
+                mysqli_stmt_bind_param($stmt, "s", $param_username);
+                $param_username = $username;
+                // $param_password = password_hash($password, PASSWORD_DEFAULT); // hash password
+                if (mysqli_stmt_execute($stmt) ) {
+                    mysqli_stmt_store_result($stmt);
+                
+                    // Bind the result variable
+                    mysqli_stmt_bind_result($stmt, $id, $db_username, $db_password);
 
-                if (mysqli_stmt_num_rows($stmt)) {
-                    mysqli_stmt_fetch($stmt);
+                    if (mysqli_stmt_num_rows($stmt)) {
+                        mysqli_stmt_fetch($stmt);
 
-                    if(password_verify($password, $db_password)) {
-                        session_start();
-                        ini_set('session.use_strict_mode', 1);
+                        if(password_verify($password, $db_password)) {
+                            session_start();
+                            ini_set('session.use_strict_mode', 1);
 
-                        $_SESSION["loggedin"] = true;
-                        $_SESSION["id"] = $id;
-                        $_SESSION["username"] = $username;
-                        $_SESSION["display_username"] = $user;
+                            $_SESSION["loggedin"] = true;
+                            $_SESSION["id"] = $id;
+                            $_SESSION["username"] = $username;
+                            $_SESSION["display_username"] = $user;
 
-                        // Redirect user to welcome page.
-                        header("location: userView.php");
+                            // Redirect user to welcome page.
+                            header("location: userView.php");
+                        }
+
+                    else{
+                        // echo "Login unsuccessful";
+                        $password_err = "Password incorrect, please try again.";
                     }
-
+                } 
                 else{
-                    // echo "Login unsuccessful";
-                    $password_err = "Password incorrect, please try again.";
+                    echo "Something went wrong. Please try again later.";
                 }
-            } 
-            else{
-                echo "Something went wrong. Please try again later.";
+            }
+            mysqli_stmt_close($stmt);
             }
         }
-        mysqli_stmt_close($stmt);
-    }
 
     mysqli_close($link);
     }
@@ -97,25 +98,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login: Music DB</title>
 </head>
-<body>
-    <h1>Welcome back to Music DB!</h1>
-    <p>Please input your username and password to login!</p>
-    <form method="POST" action="<?=htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-        <div>
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username">
-            <br>
-            <span class="help-block"><?= $username_err; ?></span>
-        </div>
-        <div>
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password">
-            <br>
-            <span class="help-block"><?= $password_err; ?></span>
-        </div>
-        <button type="submit">Submit</button>
-        <button type="reset">Reset</button>
-    </form>
-    <p>Need to create an Account? <a href="register.php">Register here</a>.</p>
-</body>
+    <body>
+        <h1>Welcome back to Music DB!</h1>
+        <p>Please input your username and password to login!</p>
+        <form method="POST" action="<?=htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+            <div>
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username">
+                <br>
+                <span class="help-block"><?= $username_err; ?></span>
+            </div>
+            <div>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password">
+                <br>
+                <span class="help-block"><?= $password_err; ?></span>
+            </div>
+            <button type="submit">Submit</button>
+            <button type="reset">Reset</button>
+        </form>
+        <p>Need to create an Account? <a href="register.php">Register here</a>.</p>
+    </body>
 </html>
