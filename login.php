@@ -2,6 +2,7 @@
     // import server configuration file
     require_once "config.php";
 
+    session_start();
     if(isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] == true){
         header("location: userView.php");
         exit;
