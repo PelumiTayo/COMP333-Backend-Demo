@@ -14,7 +14,7 @@
 
         // validates username against alphanumeric values, length of 4 to 25, and checks if username is taken
         if(preg_match('/[\w]{4,25}/', $username)) {
-            $sql = "SELECT id FROM users_table WHERE username = ?";
+            $sql = "SELECT username FROM users_table WHERE username = ?";
             
             if($stmt = mysqli_prepare($link, $sql)) {
                 mysqli_stmt_bind_param($stmt, "s", $param_username);
