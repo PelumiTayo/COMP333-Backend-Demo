@@ -68,7 +68,6 @@
 
                             $_SESSION["loggedin"] = true;
                             $_SESSION["username"] = $username;
-                            $_SESSION["display_username"] = $user;
 
                             // Redirect user to page.
                             header("location: userView.php");
