@@ -12,18 +12,12 @@
     // Echo the username.
     echo "You are logged in as user: " . $_SESSION["username"];
 
-    // if ( $SERVER["REQUEST_METHOD"] == "GET"){
     if ($results = $link->query("SELECT * FROM ratings_table")) {
         $rows = mysqli_fetch_all($results);
-        // print_r($rows);
-        // foreach ($rows as $row) {
-        //     printf("%s (%s)\n", $row[1], $row[2]);
-        // }
     }
     else {
         echo "Something went wrong, please try at another time";
     }
-    // }
 ?>
 
 
