@@ -9,11 +9,16 @@
         exit;
     }
 
-    $rating_id = $_GET["id"];
+    $rating_id = htmlspecialchars($_GET["id"]);
     // Echo the username.
     echo "You are logged in as user: " . $_SESSION["username"];
     if ($result = $link->query("SELECT * FROM ratings_table WHERE id = $rating_id")) {
-        $rating = $result->fetch_row();
+        if ($result->num_rows > 0) {
+            $rating = mysqli_fetch_row($results);
+            }
+            else {
+                header("location: userView.php");
+            }
     }
     else {
         echo "Something went wrong, please try again later";
