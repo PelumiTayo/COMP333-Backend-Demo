@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
         if ($existing_rating) {
-            $rating_err = "You have already rated this song.";
+            $song_err = "You have already rated this song. Please input another song.";
         } else {
             $sql = "INSERT into ratings_table (artist, username, song, rating) VALUES (?, ?, ?, ?)";
 
