@@ -14,7 +14,7 @@
     echo "You are logged in as user: " . $_SESSION["username"];
     if ($result = $link->query("SELECT * FROM ratings_table WHERE id = $rating_id")) {
         if ($result->num_rows > 0) {
-            $rating = mysqli_fetch_row($results);
+            $rating = mysqli_fetch_row($result);
             }
             else {
                 header("location: userView.php");
@@ -48,6 +48,6 @@
     <?="<strong>".$rating[3]."</strong>"?>
     <p>rating</p>
     <?="<strong>".$rating[4]."</strong>"?>
-    <a style="display:block;" href="/userView.php">Back</a>
+    <a style="display:block;" href="../userView.php">Back</a>
 </body>
 </html>
