@@ -17,14 +17,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($result = $link->query("SELECT * FROM ratings_table WHERE id = $rating_id")) {
         if ($result->num_rows > 0) {
             if ($link->query("DELETE FROM ratings_table WHERE id = $rating_id")) {
-                header("location: ./userView.php");
+                header("location: ../userView.php");
             }
             else {
                 echo "Something went wrong, please try again later";
             }
         }
         else {
-            header("location:userView.php");
+            header("location:../userView.php");
         }
     }
 }
