@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     //checks if artist, song, and rating pass the conditions
     if (preg_match('/[\w]{1,50}/', $artist) && preg_match('/[\w]{1,25}/', $song) && preg_match('/^[1-5]$/', $rating)) {
-        $sql = "INSERT into rating (artist, username, song, rating) VALUES (?, ?, ?, ?)";
+        $sql = "INSERT into ratings_table (artist, username, song, rating) VALUES (?, ?, ?, ?)";
 
         if ($stmt = mysqli_prepare($link, $sql)) {
             mysqli_stmt_bind_param($stmt, "sssi", $param_artist, $param_username, $param_song, $param_rating);
@@ -61,6 +61,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
+    You are logged in as user: <?=$_SESSION['username']?>
+    <br>
+    <a href=""> Log Out</a>
     <h1>Please input a Song Rating</h1>
 
     <form method="POST" action="<?= htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
