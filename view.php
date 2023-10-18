@@ -48,6 +48,6 @@
     <?="<strong>".$rating[3]."</strong>"?>
     <p>rating</p>
     <?="<strong>".$rating[4]."</strong>"?>
-    <a style="display:block;" href="/userView.php">Back</a>
+    <a style="display:block;" href="../userView.php">Back</a>
 </body>
 </html>

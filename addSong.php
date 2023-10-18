@@ -16,26 +16,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     //checks if artist, song, and rating pass the conditions
     if (preg_match('/[\w]{1,50}/', $artist) && preg_match('/[\w]{1,25}/', $song) && preg_match('/^[1-5]$/', $rating)) {
-        $sql = "INSERT into ratings_table (artist, username, song, rating) VALUES (?, ?, ?, ?)";
-
+        $sql = "SELECT * FROM ratings_table WHERE username = ? AND song = ?";
+        $existing_rating;
         if ($stmt = mysqli_prepare($link, $sql)) {
-            mysqli_stmt_bind_param($stmt, "sssi", $param_artist, $param_username, $param_song, $param_rating);
-            $param_artist = $artist;
+            mysqli_stmt_bind_param($stmt, "ss", $param_username, $param_song);
             $param_username = $_SESSION['username'];
             $param_song = $song;
-            $param_rating = $rating;
 
             if (mysqli_stmt_execute($stmt)) {
-
-                echo "added to the database";
-                header("location: userView.php");
-            } else {
-                echo "Oops! Something went wrong. Please try again later.";
+                $existing_rating = $stmt->fetch();
             }
         }
+        if ($existing_rating) {
+            $rating_err = "You have already rated this song.";
+        } else {
+            $sql = "INSERT into ratings_table (artist, username, song, rating) VALUES (?, ?, ?, ?)";
+
+            if ($stmt = mysqli_prepare($link, $sql)) {
+                mysqli_stmt_bind_param($stmt, "sssi", $param_artist, $param_username, $param_song, $param_rating);
+                $param_artist = $artist;
+                $param_username = $_SESSION['username'];
+                $param_song = $song;
+                $param_rating = $rating;
+
+                if (mysqli_stmt_execute($stmt)) {
+
+                    echo "added to the database";
+                    header("location: userView.php");
+                } else {
+                    echo "Oops! Something went wrong. Please try again later.";
+                }
+            }
+        }
+
         mysqli_stmt_close($stmt);
 
     }
+
     //error handling. 
     else {
         if (!preg_match('/[\w]{1,50}/', $artist)) {
@@ -61,7 +78,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
-    You are logged in as user: <?=$_SESSION['username']?>
+    You are logged in as user:
+    <?= $_SESSION['username'] ?>
     <br>
     <a href=""> Log Out</a>
     <h1>Please input a Song Rating</h1>
