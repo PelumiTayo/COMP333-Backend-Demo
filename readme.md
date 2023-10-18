@@ -43,7 +43,7 @@ Music DB allows users to rate and save their favorite songs.
 
 ## Production environment
 
-Coming soon!
+[https://comp333-backend-demo.infinityfreeapp.com/ 🌐](https://comp333-backend-demo.infinityfreeapp.com/)
 
 ## Creators
 Created by [John Whangbo](https://github.com/jwwhangbo)  && [Pelumi Tayo-Orisadare](https://github.com/PelumiTayo)
