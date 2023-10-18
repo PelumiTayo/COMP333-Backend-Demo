@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <form method= "POST" action="<?=htmlspecialchars($_SERVER["PHP_SELF"])?>">
         <input type="hidden" name="id" value="<?=$rating_id?>">
         <button>Submit</button>
-        <a href="userView.php">Cancel</a>
+        <a href="/userView.php">Cancel</a>
     </form>
 </body>
 </html>
